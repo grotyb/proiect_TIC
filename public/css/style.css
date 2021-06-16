@@ -1,0 +1,18 @@
+*{
+    
+}
+.center{
+    text-align: center;
+}
+.center-top{
+    text-align: center;
+    margin-top:2em;
+}
+.wrapper{
+    display: grid;
+    place-items: center;
+    margin-top: 20vh;
+}
+.center-button{
+    margin:auto
+}
