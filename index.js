@@ -1,6 +1,9 @@
 var express = require('express');
 let mongoose = require('mongoose');
 var bodyParser = require('body-parser')
+// var popup = require('popups');
+let alert = require('alert');
+var _ = require('lodash');  
 
 const app = express();
 
@@ -31,7 +34,7 @@ app.listen(5000, ()=>{
     console.log('server started on port 5000');
 })
 
-app.post('/', (req, res)=>{
+app.post('/signUp', (req, res)=>{
     const user = new User({
          email: req.body.email,
           password:req.body.pass
@@ -43,11 +46,29 @@ app.post('/', (req, res)=>{
       res.redirect('/main')
 console.log(user.email); 
     // console.log(req.body.email, ' ', req.body.pass);
-})
+});
+
+app.post('/', (req,res)=>{
+    console.log(req.body.email);
+    console.log( req.body.pass);
+    User.find({email: req.body.email, password:req.body.pass}, (err, user)=>{
+        console.log(user);
+        if(!_.isEmpty(user)){
+            res.redirect('/main');
+        }
+        else{
+            alert("credentials not valid");
+            res.redirect('/')
+        }
+    });
+});
 
 app.get('/main', (req,res)=>{
     res.sendFile('views/main.html', {root: __dirname })
 })
 
+app.get('/signUp', (req,res)=>{
+    res.sendFile('views/signUp.html', {root:__dirname});
+})
 
 
